@@ -277,7 +277,11 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     constants.put("bundleId", packageName);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
       try {
-        constants.put("userAgent", WebSettings.getDefaultUserAgent(this.reactContext));
+        //[akili] [ADHD-792] When running Android e2e tests with Detox, this
+        // line is causing the Detox framework to hang. See these issues:
+        // https://github.com/rebeccahughes/react-native-device-info/issues/335
+        // https://github.com/wix/detox/issues/395#issuecomment-365593821
+        //constants.put("userAgent", WebSettings.getDefaultUserAgent(this.reactContext));
       } catch (RuntimeException e) {
         constants.put("userAgent", System.getProperty("http.agent"));
       }
